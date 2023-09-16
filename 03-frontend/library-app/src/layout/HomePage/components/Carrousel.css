@@ -1,0 +1,19 @@
+.carousel-item {
+    transition: transform .6s ease-in-out !important;
+}
+
+.d-lg-block {
+    display: flex!important;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.carousel-inner {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.container.mt-5 {
+    height: auto;
+}

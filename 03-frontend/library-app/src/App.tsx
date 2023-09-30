@@ -2,13 +2,14 @@ import React from "react";
 import "./App.css";
 import { Navbar } from "./layout/NavBarAndFooter/NavBar";
 import { Footer } from "./layout/NavBarAndFooter/Footer";
-import { HomePage } from "./layout/HomePage/HomePage";
+import { SearchBooksPage } from "./layout/SearchBooksPage/SearchBooksPage";
 
 export const App = () => {
   return (
     <div>
       <Navbar />
-      <HomePage />
+      {/* <HomePage /> */}
+      <SearchBooksPage />
       <Footer />
     </div>
   );

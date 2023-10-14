@@ -3,6 +3,7 @@ import BookModel from "../../models/BookModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { SearchBook } from "./components/SearchBook";
 import { Pagination } from "../Utils/Pagination";
+import { fetchWithAuth } from "../../Auth/fetchWithAuth";
 
 export const SearchBooksPage = () => {
   const [books, setBooks] = useState<BookModel[]>([]);
@@ -32,7 +33,7 @@ export const SearchBooksPage = () => {
         url = baseUrl + searchWithPage;
       }
 
-      const response = await fetch(url);
+      const response = await fetchWithAuth(url);
 
       if (!response.ok) {
         throw new Error("Something went wrong!");

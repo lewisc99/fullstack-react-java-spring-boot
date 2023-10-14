@@ -6,6 +6,8 @@ import { SearchBooksPage } from "./layout/SearchBooksPage/SearchBooksPage";
 import { HomePage } from "./layout/HomePage/HomePage";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { BookCheckoutPage } from "./layout/BookCheckoutPage/BookCheckoutPage";
+import { LoginAuth } from "./Auth/LoginAuth";
+import ProtectedRoute from "./Auth/ProtectedRoute";
 
 export const App = () => {
   return (
@@ -20,10 +22,15 @@ export const App = () => {
             <HomePage />
           </Route>
           <Route path="/search">
-            <SearchBooksPage />
+            <ProtectedRoute component={SearchBooksPage} />
+            {/* Use ProtectedRoute */}
           </Route>
           <Route path="/checkout/:bookId">
-            <BookCheckoutPage />
+            <ProtectedRoute component={BookCheckoutPage} />
+            {/* Use ProtectedRoute */}
+          </Route>
+          <Route path="/login">
+            <LoginAuth />
           </Route>
         </Switch>
       </div>

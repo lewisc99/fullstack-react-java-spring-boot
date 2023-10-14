@@ -5,6 +5,7 @@ import { StarsReview } from "../Utils/StarsReview";
 import { CheckoutAndReviewBox } from "./CheckoutAndReviewBox";
 import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
+import { fetchWithAuth } from "../../Auth/fetchWithAuth";
 
 export const BookCheckoutPage = () => {
   const [book, setBook] = useState<BookModel>();
@@ -21,8 +22,8 @@ export const BookCheckoutPage = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       const baseUrl: string = `http://localhost:8080/api/books/${bookId}`;
-
-      const response = await fetch(baseUrl);
+      
+      const response = await fetchWithAuth(baseUrl);
       if (!response.ok) {
         throw new Error("Something went wrong!");
       }
@@ -52,7 +53,7 @@ export const BookCheckoutPage = () => {
     const fetchBookReviews = async () => {
       const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
 
-      const responseReviews = await fetch(reviewUrl);
+      const responseReviews = await fetchWithAuth(reviewUrl);
 
       if (!responseReviews.ok) {
         throw new Error("Something went wrong!");

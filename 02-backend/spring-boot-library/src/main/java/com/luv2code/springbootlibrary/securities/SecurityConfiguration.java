@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
@@ -44,6 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/books/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/reviews/search/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/checkout/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/books/secure/**").permitAll()
                 .antMatchers("/h2-console/**").hasAuthority("USER")
                 .antMatchers("/api/login").permitAll()
                 .anyRequest().authenticated()

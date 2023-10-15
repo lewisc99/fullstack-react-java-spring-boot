@@ -1,10 +1,13 @@
 package com.luv2code.springbootlibrary.controller;
 
-
 import com.luv2code.springbootlibrary.entity.Book;
+import com.luv2code.springbootlibrary.securities.JWTUtil;
 import com.luv2code.springbootlibrary.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -15,20 +18,31 @@ public class BookController {
     private BookService bookService;
 
     @PutMapping("/secure/checkout")
-    public Book checkoutBook(@RequestParam Long bookId) throws Exception {
-        String userEmail = "testuser@gmail.com";
+    public Book checkoutBook(@RequestHeader("Authorization") String token, @RequestParam Long bookId) throws Exception {
+        String userEmail = getEmailByToken(token);
         return bookService.checkoutBook(userEmail, bookId);
     }
 
     @GetMapping("/secure/ischeckedout/byuser")
-    public Boolean checkoutBookByUser(@RequestParam Long bookId) {
-        String userEmail = "testuser@gmail.com";
+    public Boolean checkoutBookByUser(@RequestHeader(value = "Authorization") String token, @RequestParam Long bookId) {
+        String userEmail = getEmailByToken(token);
         return bookService.checkoutBookByUser(userEmail, bookId);
     }
 
     @GetMapping("/secure/currentloans/count")
-    public int currentLoansCount() {
-        String userEmail = "testuser@gmail.com";
+    public int currentLoansCount(@RequestHeader(value = "Authorization") String token) {
+        String userEmail = getEmailByToken(token);
         return bookService.currentLoansCount(userEmail);
+    }
+    private static String getEmailByToken(String token) {
+        String jwt = token.substring(7);
+        Map<String, List<String>> claims = JWTUtil.validateTokenAndRetrieveSubject(jwt);
+
+        if (claims.containsKey("invalid-token")) {
+             throw new RuntimeException();
+        }
+        List<String> getUsername = new ArrayList<String>();
+        getUsername = claims.get("email");
+        return getUsername.get(0);
     }
 }

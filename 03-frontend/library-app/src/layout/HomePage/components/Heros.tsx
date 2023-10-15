@@ -1,4 +1,14 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { isUserAuthenticated } from "../../../Auth/AuthService";
+
 export const Heros = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    isUserAuthenticated().then((result) => setIsAuthenticated(result));
+  }, [isAuthenticated]);
+
   return (
     <div>
       <div className="d-none d-lg-block">
@@ -14,9 +24,23 @@ export const Heros = () => {
                 Whether it is to learn a new skill or grow within one, we will
                 be able to provide the top content for you!
               </p>
-              <a className="btn main-color btn-lg text-white" href="#">
-                Sign up
-              </a>
+              {isAuthenticated ? (
+                <Link
+                  type="button"
+                  className="btn main-color btn-lg text-white"
+                  to="/search"
+                  key="0">
+                  Explore top books
+                </Link>
+              ) : (
+                <Link
+                  type="button"
+                  className="btn main-color btn-lg text-white"
+                  to="/login"
+                  key="0">
+                  Sign in
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -53,9 +77,23 @@ export const Heros = () => {
                 Whether it is to learn a new skill or grow within one, we will
                 be able to provide the top content for you!
               </p>
-              <a className="btn main-color btn-lg text-white" href="#">
-                Sign up
-              </a>
+              {isAuthenticated ? (
+                <Link
+                  type="button"
+                  className="btn main-color btn-lg text-white"
+                  to="/search"
+                  key="0">
+                  Explore top books
+                </Link>
+              ) : (
+                <Link
+                  type="button"
+                  className="btn main-color btn-lg text-white"
+                  to="/login"
+                  key="0">
+                  Sign in
+                </Link>
+              )}
             </div>
           </div>
           <div className="m-2">

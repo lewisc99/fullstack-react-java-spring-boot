@@ -1,6 +1,6 @@
 export const fetchWithAuth = async (
   url: string,
-  options: RequestInit = {}
+  options: any = {}
 ): Promise<Response> => {
   const authTokenJson = localStorage.getItem("authToken");
   let tokenModel: any;
@@ -12,13 +12,11 @@ export const fetchWithAuth = async (
 
   if (tokenModel) {
     if (!options.headers) {
-      options.headers = new Headers();
+      options.headers = {};
     }
 
-    (options.headers as Headers).append(
-      "Authorization",
-      `Bearer ${tokenModel.token}`
-    );
+    // Set Authorization header in the headers object
+    options.headers["Authorization"] = `Bearer ${tokenModel.token}`;
   }
 
   const response = await fetch(url, options);

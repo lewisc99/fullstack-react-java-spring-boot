@@ -7,7 +7,6 @@ export const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const history = useHistory(); // Initialize the history object
 
-
   useEffect(() => {
     isUserAuthenticated().then((result) => setIsAuthenticated(result));
   }, [isAuthenticated]);
@@ -49,6 +48,15 @@ export const Navbar = () => {
                 Search Books
               </NavLink>
             </li>
+            {isAuthenticated ? (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/shelf">
+                  Shelf
+                </NavLink>
+              </li>
+            ) : (
+              <></>
+            )}
           </ul>
           <ul className="navbar-nav ms-auto">
             {isAuthenticated ? (

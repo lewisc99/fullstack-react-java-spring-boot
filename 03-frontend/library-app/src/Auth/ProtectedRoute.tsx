@@ -13,14 +13,21 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    debugger;
     const authTokenJson = localStorage.getItem("authToken");
     if (authTokenJson == null) {
       setAuthToken("");
       setLoading(false); // Set loading to false after fetching the token
     } else {
       const tokenModel = JSON.parse(authTokenJson || "");
-      setAuthToken(tokenModel.token);
-      setLoading(false); // Set loading to false after fetching the token
+      var isTokenExpired = isTokenExpiredSum(tokenModel.expirationToken)!;
+      if (isTokenExpired) {
+        setAuthToken("");
+        setLoading(false); // Set loading to false after fetching the token
+      } else {
+        setAuthToken(tokenModel.token);
+        setLoading(false); // Set loading to false after fetching the token
+      }
     }
   }, []);
 
@@ -37,5 +44,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     />
   );
 };
+
+function isTokenExpiredSum(expirationTime: number): boolean {
+  const currentTime = Date.now(); // Get the current timestamp in milliseconds
+
+  // Compare the current time to the token's expiration time
+  if (currentTime >= expirationTime) {
+    // Token has expired
+    return true;
+  }
+
+  // Token is not expired
+  return false;
+}
 
 export default ProtectedRoute;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ReviewModel from "../../../models/ReviewModel";
-import { fetchWithAuth } from "../../../Auth/fetchWithAuth";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Review } from "../../Utils/Review";
 import { Pagination } from "../../Utils/Pagination";

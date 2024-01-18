@@ -8,6 +8,8 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { BookCheckoutPage } from "./layout/BookCheckoutPage/BookCheckoutPage";
 import { LoginAuth } from "./Auth/LoginAuth";
 import { ReviewListPage } from "./layout/BookCheckoutPage/ReviewListPage/ReviewListPage";
+import { ShelfPage } from "./layout/ShelfPage/ShelfPage";
+import ProtectedRoute from "./Auth/ProtectedRoute";
 
 export const App = () => {
   return (
@@ -32,6 +34,9 @@ export const App = () => {
           </Route>
           <Route path="/login">
             <LoginAuth />
+          </Route>
+          <Route path="/shelf">
+            <ProtectedRoute component={ShelfPage} />
           </Route>
         </Switch>
       </div>

@@ -2,8 +2,10 @@ package com.luv2code.springbootlibrary.services;
 
 import com.luv2code.springbootlibrary.dao.BookRepository;
 import com.luv2code.springbootlibrary.dao.CheckoutRepository;
+import com.luv2code.springbootlibrary.dao.HistoryRepository;
 import com.luv2code.springbootlibrary.entity.Book;
 import com.luv2code.springbootlibrary.entity.Checkout;
+import com.luv2code.springbootlibrary.entity.History;
 import com.luv2code.springbootlibrary.responsemodels.ShelfCurrentLoansResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,10 @@ public class BookService {
 
     @Autowired
     private CheckoutRepository checkoutRepository;
+
+    @Autowired
+    private HistoryRepository historyRepository;
+
 
     public Book checkoutBook(String userEmail, Long bookId) throws Exception {
 
@@ -114,6 +120,17 @@ public class BookService {
 
         bookRepository.save(book.get());
         checkoutRepository.deleteById(validateCheckout.getId());
+
+        History history = new History(
+                userEmail,
+                validateCheckout.getCheckoutDate(),
+                LocalDate.now().toString(),
+                book.get().getTitle(),
+                book.get().getAuthor(),
+                book.get().getDescription(),
+                book.get().getImg()
+        );
+        historyRepository.save(history);
     }
 
     public void renewLoan(String userEmail, Long bookId) throws Exception {

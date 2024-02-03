@@ -129,7 +129,6 @@ export const BookCheckoutPage = () => {
 
   useEffect(() => {
     isUserAuthenticated().then((result) => {
-      debugger;
       setIsAuthenticated(result);
       if (isAuthenticated) {
         const url: string = `http://localhost:8080/api/books/secure/currentloans/count`;

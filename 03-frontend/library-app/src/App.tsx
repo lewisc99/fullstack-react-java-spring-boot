@@ -10,6 +10,8 @@ import { LoginAuth } from "./Auth/LoginAuth";
 import { ReviewListPage } from "./layout/BookCheckoutPage/ReviewListPage/ReviewListPage";
 import { ShelfPage } from "./layout/ShelfPage/ShelfPage";
 import ProtectedRoute from "./Auth/ProtectedRoute";
+import { MessagesPage } from "./layout/MessagesPage/MessagesPage";
+import { ManageLibraryPage } from "./layout/ManageLibraryPage/ManageLibraryPage";
 
 export const App = () => {
   return (
@@ -37,6 +39,13 @@ export const App = () => {
           </Route>
           <Route path="/shelf">
             <ProtectedRoute component={ShelfPage} />
+          </Route>
+          <Route path="/messages">
+            <ProtectedRoute component={MessagesPage} />
+          </Route>
+
+          <Route path="/admin">
+            <ProtectedRoute component={ManageLibraryPage} />
           </Route>
         </Switch>
       </div>

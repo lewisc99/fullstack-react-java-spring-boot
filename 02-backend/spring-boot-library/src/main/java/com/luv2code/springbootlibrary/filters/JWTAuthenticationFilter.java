@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -39,7 +41,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             credentials.getEmail(),
-                            credentials.getPassword(), new ArrayList<>()
+                            credentials.getPassword(), credentials.getAuthorities()
                     )
             );
 
@@ -57,7 +59,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                              Authentication auth) throws IOException, ServletException
     {
         List<String> roleList = new ArrayList<>();
-        roleList.add("USER");
+
+        // Extract roles from authorities
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            roleList.add(authority.getAuthority());
+        }
+
+        // Pass roles to generateToken method
         TokenResponseDTO token = JWTUtil.generateToken(((User) auth.getPrincipal()).getEmail(), roleList);
 
         PrintWriter out = response.getWriter();

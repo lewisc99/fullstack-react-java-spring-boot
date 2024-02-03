@@ -70,4 +70,16 @@ public class JWTUtil {
             return claims;
         }
     }
+
+    public static String getEmailByToken(String token) {
+        String jwt = token.substring(7);
+        Map<String, List<String>> claims = JWTUtil.validateTokenAndRetrieveSubject(jwt);
+
+        if (claims.containsKey("invalid-token")) {
+            throw new RuntimeException();
+        }
+        List<String> getUsername = new ArrayList<String>();
+        getUsername = claims.get("email");
+        return getUsername.get(0);
+    }
 }

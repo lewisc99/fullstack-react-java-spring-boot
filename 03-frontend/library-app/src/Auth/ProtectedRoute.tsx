@@ -13,7 +13,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    debugger;
     const authTokenJson = localStorage.getItem("authToken");
     if (authTokenJson == null) {
       setAuthToken("");

@@ -45,6 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/checkout/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/books/secure/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/reviews/secure/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/messages/secure/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/messages/search/**").permitAll()
                 .antMatchers("/h2-console/**").hasAuthority("USER")
                 .antMatchers("/api/login").permitAll()
                 .anyRequest().authenticated()

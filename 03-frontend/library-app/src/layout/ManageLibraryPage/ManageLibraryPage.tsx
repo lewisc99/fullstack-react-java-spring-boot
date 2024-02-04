@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { AdminMessages } from "./components/AdminMessages";
 import { isUserAuthenticated } from "../../Auth/AuthService";
+import { AddNewBook } from "./components/AddNewBook";
+import { ChangeQuantityOfBooks } from "./components/ChangeQuantityOfBooks";
 
 export const ManageLibraryPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,7 +40,7 @@ export const ManageLibraryPage = () => {
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <a
-            className="nav-link"
+            className="nav-link active"
             id="add-book-tab"
             data-bs-toggle="tab"
             href="#add-book-content">
@@ -66,35 +68,24 @@ export const ManageLibraryPage = () => {
       </ul>
 
       <div className="tab-content mt-2">
-        <div className="tab-pane fade show active" id="name-content">
-          <div className="row">
-            <div className="col-md-12">
-              <h3>Name</h3>
-              <p>1</p>
-            </div>
-          </div>
-        </div>
         <div className="tab-pane fade" id="add-book-content">
           <div className="row">
             <div className="col-md-12">
-              <h3>Add New Book</h3>
-              <p>2</p>
+              <AddNewBook key={0}/>
             </div>
           </div>
         </div>
         <div className="tab-pane fade" id="change-quantity-content">
           <div className="row">
             <div className="col-md-12">
-              <h3>Change Quantity</h3>
-              <p>3</p>
+              <ChangeQuantityOfBooks  key={1}/>
             </div>
           </div>
         </div>
         <div className="tab-pane fade" id="messages-content">
           <div className="row">
             <div className="col-md-12">
-              <h3>Messages</h3>
-              <AdminMessages />
+              <AdminMessages key={2}/>
             </div>
           </div>
         </div>
